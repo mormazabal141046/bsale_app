@@ -120,16 +120,16 @@ select_categories.addEventListener('change', (event) => {
 // Accion para el boton de Buscar. 
 const btn_search = document.querySelector("#searchItems")
 btn_search.addEventListener('click', (event)=>{
-select_categories.value ="";
-loadData();
 event.preventDefault();
 const search = document.querySelector("#input_search");
     // Si el input donde se ingresa el texto de busqueda esta vacio, El sistema alertará un mensaje.
     if(search.value == ""){
-        alert('Debe Ingresar algun texto para una Busqueda');
+        alert('Debe Ingresar algun texto para realizar la Busqueda');
         search.focus();
         return;
     }
+    select_categories.value ="";
+    loadData();
     fetch('db/product/getProductsBySearch.php',{
         method:"POST",
         headers: {
