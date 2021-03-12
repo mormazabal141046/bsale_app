@@ -4,7 +4,7 @@
   "description": "Ejercicio BSALE",
   "main": "./server/index.js",
   "scripts": {
-    "start": "./server/index.js",
+    "start": "node ./server/index.js",
     "dev": "nodemon ./server/index.js"
   },
   "author": "Mauricio Ormazabal",
