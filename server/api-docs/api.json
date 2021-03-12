@@ -11,7 +11,7 @@
     },
     "servers": [
       {
-        "url": "https://bsale-test-mormazabal.herokuapp.com/api",
+        "url": "https://bsale-app.herokuapp.com/api",
         "description": "Heroku Server"
       },
       {
