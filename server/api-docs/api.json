@@ -1,0 +1,236 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "API Ejercicio BSALE ",
+      "description": "Esta es una API única y exclusivamente con fines de prueba para BSALE. Mediante este recurso se especifican los metodos para obtener informacion correspondiente a los productos de la tienda BSALE.",
+      "contact": {
+        "name": "Account of Developer",
+        "email": "mormazabal@hotmail.com"
+      },
+      "version": "1.0"
+    },
+    "servers": [
+      {
+        "url": "https://bsale-test-mormazabal.herokuapp.com/api",
+        "description": "Heroku Server"
+      },
+      {
+        "url": "http://localhost:3005/api",
+        "description": "Dev Server"
+      }
+    ],
+    "paths": {
+      "/products": {
+        "get": {
+          "tags": [
+            "Productos"
+          ],
+          "description": "Obtiene listado de todos los Productos",
+          "responses": {
+            "200": {
+              "description": "Success Request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/inline_response_200"
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found Request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "string",
+                    "example": {"message":"Error 404. Not found request"}
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/products/categories/{id}": {
+        "get": {
+          "tags": [
+            "Productos"
+          ],
+          "description": "Obtiene listado de todos los Productos que pertenezcan a la categoria señalada",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "Id de Categoria",
+              "required": true,
+              "style": "form",
+              "explode": true,
+              "schema": {
+                "type": "integer",
+                "example": 1
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success Request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/inline_response_200"
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found Request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "string",
+                    "example": {"message":"Error 404. Not found request"}
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/products/{search}": {
+        "get": {
+          "tags": [
+            "Productos"
+          ],
+          "description": "Obtiene listado de todos los Productos que contengan el texto especificado en la busqueda",
+          "parameters": [
+            {
+              "name": "search",
+              "in": "path",
+              "description": "Texto de busqueda, Atributo o Nombre a Encontrar",
+              "required": true,
+              "style": "form",
+              "explode": true,
+              "schema": {
+                "type": "string",
+                "example": "fanta"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Success Request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/inline_response_200"
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found Request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "string",
+                    "example": {"message":"Error 404. Not found request"}
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/categories": {
+        "get": {
+          "tags": [
+            "Categorias"
+          ],
+          "description": "Obtiene listado de todas las Categorias de Producto",
+          "responses": {
+            "200": {
+              "description": "Success Request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/inline_response_200_1"
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not Found Request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "string",
+                    "example": {"message":"Error 404. Not found request"}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "inline_response_200": {
+          "properties": {
+            "id": {
+              "type": "integer",
+              "example": "5"
+            },
+            "name": {
+              "type": "string",
+              "example": "ENERGETICA MR BIG"
+            },
+            "url_image": {
+              "type": "string",
+              "example": "https://dojiw2m9tvv09.cloudfront.net/11132/product/misterbig3308256.jpg"
+            },
+            "price": {
+              "type": "integer",
+              "example": "1490"
+            },
+            "discount": {
+              "type": "integer",
+              "example": "20"
+            },
+            "category": {
+              "type": "string",
+              "example": "bebida energetica"
+            },
+            "id_category": {
+              "type": "integer",
+              "example": "1"
+            }
+          }
+        },
+        "inline_response_200_1": {
+          "properties": {
+            "id": {
+              "type": "integer",
+              "example": "2"
+            },
+            "name": {
+              "type": "string",
+              "example": "Pisco"
+            }
+          }
+        }
+      }
+    }
+  }

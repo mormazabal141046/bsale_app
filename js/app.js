@@ -7,9 +7,20 @@ const loadData =()=>{
     </div>`;
 }
 
+const url = window.location;
+const headers_http = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  };
+
+
+// CONTROLES DE CATEGORIAS
+//
+//
+//
 // Se obtienen las Categorias desde DB
 const getCategories = () =>{
-    fetch('db/category/getCategories.php'
+    fetch(url+'api/categories'
     ).then((resp) =>{
         return resp.json();
     }).then((data) => {
@@ -35,17 +46,21 @@ const setCategories = (data)=>{
         select_categories.appendChild(option);
     })
 }
+//
+//
+//
+//
+//
+// FIN CONTROLES DE CATEGORIAS
+
+
 
 // Se obtienen todos los productos por defecto
 const getProducts = () =>{
     loadData();
-    fetch('db/product/getAllProducts.php',{
+    fetch(url+'api/products',{
         method:"GET",
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-        // body: JSON.stringify({prueba:"Hola"})
+        headers: headers_http
     }
     ).then((resp) =>{
         return resp.json();
@@ -86,8 +101,8 @@ const showProducts = (data)=>{
         template.querySelectorAll('span')[1].textContent = item.name; //Nombre del Producto. Se le agregado CSS para truncar el largo del string.
         template.querySelectorAll('span')[1].setAttribute('title',item.name ); // Se añade a la propiedad "Title" el nombre compelto del Producto
         template.querySelector('.body-discount').innerHTML = ((item.discount > 0) ? `<div class="discount">-`+item.discount+`%</div>` : ""); //No es requirimiento pero en caso de que el producto tenga descuento > 0, muestra el Procentaje en una esquina superior.
-        template.querySelector('del').innerHTML = (item.discount > 0) ? "$"+parseInt(item.price) : `<br>`; // En caso de existir descuento, muestra el precio original.
-        template.querySelector('span strong').textContent = (item.discount > 0) ? "$"+(parseInt(item.price)-(parseInt(item.price)*parseInt(item.discount)/100)) : "$"+ parseInt(item.price) //En caso de existir descuento, calcula y muestra el nuevo precio con el descuento aplicado-
+        template.querySelector('del').innerHTML = (item.discount > 0) ? "$"+Math.round(parseInt(item.price)) : `<br>`; // En caso de existir descuento, muestra el precio original.
+        template.querySelector('span strong').textContent = (item.discount > 0) ? "$"+Math.round((parseInt(item.price)-(parseInt(item.price)*parseInt(item.discount)/100))) : "$"+ Math.round(parseInt(item.price)) //En caso de existir descuento, calcula y muestra el nuevo precio con el descuento aplicado-
         const clone = template.cloneNode(true);
         fragment.appendChild(clone);
     })
@@ -100,13 +115,10 @@ const showProducts = (data)=>{
 select_categories.addEventListener('change', (event) => {
     loadData();
     event.preventDefault();
-    fetch('db/product/getProductsByCategory.php',{
-        method:"POST",
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-        body: JSON.stringify({id_category: parseInt(event.target.value)})
+    const id_category = event.target.value;
+    fetch(url+'api/products/categories/'+id_category,{
+        method:"GET",
+        headers: headers_http
     }).then((resp) =>{
         return resp.json();
     }).then((data) => {
@@ -130,13 +142,9 @@ const search = document.querySelector("#input_search");
     }
     select_categories.value ="";
     loadData();
-    fetch('db/product/getProductsBySearch.php',{
-        method:"POST",
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({search: search.value})
+    fetch(url+'api/products/'+search.value,{
+        method:"GET",
+        headers: headers_http
     }).then((resp) =>{
         return resp.json();
     }).then((data) => {
