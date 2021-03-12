@@ -4,7 +4,7 @@
   "description": "Ejercicio BSALE",
   "main": "server/index.js",
   "scripts": {
-    "start": "node index",
+    "start": "server/index",
     "dev": "nodemon server/index.js"
   },
   "author": "",
